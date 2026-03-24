@@ -1,0 +1,8 @@
+
+//ADD PRODUCT
+use prebuilt ui for form to add product
+create states -
+files,name,description,category,price,offerprice
+scroollbar thing
+handle submit ,handle on chaange and the file update using files state
+//ALL orders-make state for orders and set it with dummyorderss using useeffect
