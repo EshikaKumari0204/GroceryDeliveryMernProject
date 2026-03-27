@@ -1,0 +1,11 @@
+ 
+//APIKEY
+cloudinary make an api key 
+get the cloudname,apikey,api secret in env
+cloudinary config -makefile and do the configuration in the file in config
+multer config also
+addprod- get all product item in json format in req.body and then get all images from req.files ,uploadall images on cloudinary
+create the product using  productdata and image
+prodlist-get all items from the database using find method
+prodbyid-get product by req.body and find form the database 
+changeinstock-get id and instock from req.body
