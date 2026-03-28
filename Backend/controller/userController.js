@@ -84,4 +84,12 @@ const logout=async(req,res)=>{
 
   }
 }
-module.exports={register,login,isauth,logout}
+const updatecart=async(req,res)=>{
+ try{ const {id,cartitems}=req.body;
+  const user=findByIdAndUpdate({id,{cartitems}})}
+   catch(err){
+    console.log(err.message);
+    return res.json({success:false,message:"Server error"})
+  }
+}
+module.exports={register,login,isauth,logout,updatecart}

@@ -1,11 +1,12 @@
 const mongoose=require("mongoose")
 const ProductSchema=new mongoose.Schema({
-  name:{Type:String,required:true},
-  category:{Type:String,required:true},
-  offerPrice:{Type:Number,required:true},
-  price:{Type:Number,required:true},
-  description:{Type:String,required:true},
-  image:{Type:String,required:true},
-  inStock:{Type:String,required:true},
+  name:{type:String,required:true},
+  category:{type:String,required:true},
+  offerPrice:{type:Number,required:true},
+  price:{type:Number,required:true},
+  description:{type:Array,required:true},
+  image:{type:Array,required:true},
+  inStock:{type: Boolean,default:true},
 
 })
+module.exports=mongoose.model("prod",ProductSchema)

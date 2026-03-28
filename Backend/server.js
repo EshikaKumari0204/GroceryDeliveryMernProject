@@ -5,6 +5,7 @@ const cors=require("cors");
 const dbconnection = require("./configs/db");
 const useRouter = require("./routes/userRoute");
 const sellerRouter = require("./routes/sellerRoute");
+const { ProductRouter } = require("./routes/productRoute");
 const app=express();
 const originAllowed = ["http://localhost:5173"];
 app.use(cors({
@@ -20,6 +21,7 @@ app.get("/",(req,res)=>{
 })
 app.use("/api/user",useRouter)
 app.use("/api/seller",sellerRouter)
+app.use("/api/product",ProductRouter)
 const port=process.env.PORT||4000
 app.listen(port,()=>{
   console.log(`server is listening at port ${port}`)
