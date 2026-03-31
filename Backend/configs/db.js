@@ -7,6 +7,5 @@ const dbconnection=async()=>{
   catch(err){
     console.log(err.message)
   }
- 
 }
 module.exports=dbconnection

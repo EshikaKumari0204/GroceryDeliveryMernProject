@@ -15,10 +15,8 @@ const bcrypt=require("bcryptjs")
     else{
      const salt=await bcrypt.genSalt(10);
      const hashedpass=await bcrypt.hash(password,salt);
-     console.log("hashedpass",hashedpass)
      const newuser=await Usermodel.create({name,email,password:hashedpass})
-     console.log(newuser)
-     const token=jwt.sign({id:newuser._id,email:newuser.email},process.env.JWT_SECRET,{expiresIn:"7d"}
+     const token=jwt.sign({id:newuser._id},process.env.JWT_SECRET,{expiresIn:"7d"}
      )
      res.cookie('token',token,{
       httpOnly:true,
@@ -26,7 +24,7 @@ const bcrypt=require("bcryptjs")
       sameSite:process.env.ENVIRONMENT=="production"?'none':'strict',
       maxAge:24*7*60*60*1000
      })
-      return res.json({success:true,user:newuser})
+      return res.json({success:true,user:{email:newuser.email,name:newuser.name}})
     }
   }
   }
@@ -38,25 +36,23 @@ const bcrypt=require("bcryptjs")
 const login=async(req,res)=>{
   try{
  const {email,password}=req.body;
+   if(!email ||!password){
+    return res.json({success:false,message:"Empty fields"})
+  }
   const user=await Usermodel.findOne({email})
-  if(!user) return res.json({success:false,message:"user not found"})
+  if(!user) return res.json({success:false,message:"invalid user or password"})
     else{
     const passcorrect=await bcrypt.compare(password,user.password)
     if(passcorrect){
-       const token=jwt.sign({id:user._id,email:user.email},process.env.JWT_SECRET,{expiresIn:"7d"}
-     )
+       const token=jwt.sign({id:user._id},process.env.JWT_SECRET,{expiresIn:"7d"} )
      res.cookie('token',token,{
       httpOnly:true,
       secure: process.env.ENVIRONMENT === "production",
       sameSite:process.env.ENVIRONMENT=="production"?'none':'strict',
-      maxAge:24*7*60*60*1000
-     })
-      return res.json({success:true,user})
-    }
-    else{
-      return res.json({success:false,message:"entered password is incorrect"})
+      maxAge:24*7*60*60*1000})
+      return res.json({success:true,user:{email:newuser.email,name:newuser.name}}) }else{
+      return res.json({success:false,message:"invalid user or password"})
     }}
-
   }
   catch(err){
     console.log(err.message)
@@ -86,7 +82,7 @@ const logout=async(req,res)=>{
 }
 const updatecart=async(req,res)=>{
  try{ const {id,cartitems}=req.body;
-  const user=findByIdAndUpdate({id,{cartitems}})}
+  const user=findByIdAndUpdate({id,cartitems})}
    catch(err){
     console.log(err.message);
     return res.json({success:false,message:"Server error"})

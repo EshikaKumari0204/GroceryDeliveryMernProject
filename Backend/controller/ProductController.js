@@ -1,14 +1,20 @@
 const ProductModel = require("../models/ProductModel");
 
 const addproduct=async(req,res)=>{
-  const productdata=JSON.parse(req.body.productdata)
+  try{
+ const productdata=JSON.parse(req.body.productdata)
   const images=req.files
   let imageurl=await Promise.all(images.map(async(item)=>{
-    let result=await cloudinary.uploader(item.path.{resource_type:'image'});
+    let result=await cloudinary.uploader.upload(item.path,{resource_type:'image'});
     return result.secure_url;
   }))
-  await ProductModel.create({...productdata,image})
+  await ProductModel.create({...productdata,image:imageurl})
   return res.json({success:true,message:"item added"})
+  }
+  catch(err){
+     return res.json({success:false,message:"some error occured"})
+  }
+ 
 }
 const productlist=async(req,res)=>{
   try{const products=await ProductModel.find({})
@@ -19,7 +25,8 @@ const productlist=async(req,res)=>{
   
 }
 const productbyid=async(req,res)=>{
-  try{const {id}=req.id;
+  try{
+    const {id}=req.id;
   const product=await ProductModel.findById(id)
    return res.json({success:true,product})}
   catch(err){
@@ -28,12 +35,12 @@ const productbyid=async(req,res)=>{
   
 }
 const changeinstock=async(req,res)=>{
-  const {id,inStock}=req.body;
+  try{
+     const {id,inStock}=req.body;
   const product=await ProductModel.findByIdandUpdate(id,{inStock})
   return res.json({success:true,message:"stock updated"})}
   catch(err){
     return res.json({success:false,message:err.message})
-  
-  
+}
 }
 module.exports={changeinstock,productbyid,productlist,addproduct}

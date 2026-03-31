@@ -1,5 +1,5 @@
 const mongoose=require("mongoose")
-const CartSchema=new mongoose.Schema({
+const AddressSchema=new mongoose.Schema({
   userid:{type:String,required:true},
   firstname:{type:String,required:true},
   lastname:{type:String,required:true},
@@ -10,9 +10,5 @@ const CartSchema=new mongoose.Schema({
   zipcode:{type:Number,required:true},
   country:{type:String,required:true},
  phone:{type:String,required:true},
- 
- 
-
-
 })
-module.exports=mongoose.model("cart",CartSchema)
+module.exports=mongoose.models.address|| mongoose.model("address",AddressSchema)
