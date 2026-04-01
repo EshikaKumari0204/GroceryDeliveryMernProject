@@ -1,3 +1,3 @@
-const multer=require("multer");
- const upload=multer({storage:multer.diskStorage({})})
- module.exports={upload}
+import  multer from "multer"
+const upload=multer({storage:multer.diskStorage({})})
+export default upload

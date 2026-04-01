@@ -2,14 +2,14 @@ import {createContext,useState,useEffect} from 'react'
 import {useNavigate} from 'react-router-dom'
 import {toast} from "react-hot-toast"
 import {dummyProducts} from "../assets/assets"
+import axios from "axios"
+axios.defaults.baseURL=import.meta.env.VITE_BACKEND_URL
+axios.defaults.withCredentials=true
 export const Appcontext=createContext();
-
 export const AppContextProvider=({children})=>{
 const navigate=useNavigate();
-
 const [user,setuser]=useState(null);
-const [isSeller,setisSeller]=useState(false);
-
+const [isSeller,setisSeller]=useState();
 const [showUserLogin,setUserLogin]=useState(false);
 const [productitems,setproductitems]=useState([]);
 const [cartitems,setcartitems]=useState({});
@@ -18,11 +18,21 @@ const [searchquery,setsearchquery]=useState("");
 const fetchproductitems=async()=>{
   setproductitems(dummyProducts);
 }
+  const fetchseller= async()=>{ 
+    try{
+const {data}=await axios.get("/api/seller/is-auth")
+   if(data.success) setisSeller(true)
+    else setisSeller(false)
+    }
+  catch(err){
+     setisSeller(false)
+    console.log(err.message)
+  }}
+  useEffect(()=>{
+   fetchseller()
+  fetchproductitems();
+  })
 
-useEffect(()=>{
-fetchproductitems();
-
-},[])
 
 const addtocart=(id)=>{
   const products=structuredClone(cartitems);
@@ -71,7 +81,7 @@ const totalpriceofcart=()=>{
  }
    return totalprice
 }
-const value={user,setuser,isSeller,setisSeller,navigate,showUserLogin,setUserLogin,fetchproductitems,addtocart,removetocart,searchquery,setsearchquery,productitems,totalcartitems,totalpriceofcart,cartitems,setcartitems}
+const value={user,setuser,isSeller,setisSeller,navigate,showUserLogin,setUserLogin,fetchproductitems,addtocart,removetocart,searchquery,setsearchquery,productitems,totalcartitems,totalpriceofcart,cartitems,setcartitems,axios}
  return <Appcontext.Provider value={value}>{children}</Appcontext.Provider>
 }
 

@@ -1,17 +1,24 @@
 import {useContext,useState,  useEffect} from 'react'
 import { Appcontext } from '../../context/Appcontext'
-
+import {toast} from "react-hot-toast"
 const Login = () => {
-  const {isSeller,setisSeller,navigate}=useContext(Appcontext)
+  const {isSeller,setisSeller,navigate,axios}=useContext(Appcontext)
   const [email,setemail]=useState("")
   const [password,setpassword]=useState("")
-  const handleSubmit=(e)=>{
+  const handleSubmit=async(e)=>{
+ try{
     e.preventDefault();
-    setisSeller(true)
+  const {data}=await axios.post("/api/seller/login",{email,password})
+    if(data.success) {setisSeller(true);
+      navigate("/seller");
+    }
+    else toast.error(data.message)
+    }
+    catch(err){
+ toast.error(err.message)
+    }
   }
-  useEffect(()=>{
-    if(isSeller) navigate("/seller")
-  },[isSeller,navigate])
+
   return (
     <div className="fixed top-0 right-0 left-0 bottom-0 flex flex-col gap-4 items-center justify-center z-30 bg-/50">
       <form onSubmit={handleSubmit}class="flex-col gap-5 items-start border border-gray-300 px-5 py-10  rounded-md outline-gray-400">
@@ -29,5 +36,4 @@ const Login = () => {
     </div>
   )
 }
-
 export default Login

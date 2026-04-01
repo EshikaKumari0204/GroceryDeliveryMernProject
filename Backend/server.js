@@ -1,16 +1,16 @@
-require("dotenv").config();
-const express=require("express");
-const cookieparser=require("cookie-parser")
-const cors=require("cors");
-const dbconnection = require("./configs/db");
-const useRouter = require("./routes/userRoute");
-const sellerRouter = require("./routes/sellerRoute");
-const { ProductRouter } = require("./routes/productRoute");
-const connectcloudinary = require("./configs/cloudinary");
-const { cartRouter } = require("./routes/cartRoute");
-const { addressRouter } = require("./routes/addressRoute");
-const { orderRouter } = require("./routes/orderRoute");
-const app=express();
+import "dotenv/config"
+import express from "express"
+import cookieparser from "cookie-parser"
+import  cors from  "cors"
+import dbconnection from "./configs/db.js";
+import useRouter from "./routes/userRoute.js";
+import sellerRouter from"./routes/sellerRoute.js"
+import  ProductRouter  from"./routes/productRoute.js"
+import connectcloudinary from"./configs/cloudinary.js"
+import  cartRouter  from"./routes/cartRoute.js"
+import  addressRouter  from"./routes/addressRoute.js"
+import  orderRouter from"./routes/orderRoute.js"
+const  app=express();
 await dbconnection()
 await connectcloudinary()
 const originAllowed = ["http://localhost:5173"];
@@ -36,5 +36,5 @@ app.listen(port,()=>{
   console.log(`server is listening at port ${port}`)
 })
  
- .catch((err)=>console.log(err))
+
 

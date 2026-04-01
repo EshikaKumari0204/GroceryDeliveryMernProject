@@ -1,9 +1,9 @@
-const express=require("express");
-const { isLoggedIn } = require("../middlewares/userauth");
-const { isLoggedInSeller } = require("../middlewares/sellerauth");
-const { placeorderbyCOD, getorderbyid, getallorders } = require("../controller/OrderController");
+import express from "express"
+import  isLoggedIn  from"../middlewares/userauth.js"
+import  isLoggedInSeller  from"../middlewares/sellerauth.js"
+import  { placeorderbyCOD, getorderbyid, getallorders } from"../controller/OrderController.js"
 const orderRouter=express.Router();
 orderRouter.post("/add",isLoggedIn,placeorderbyCOD)
 orderRouter.get("/get",isLoggedIn,getorderbyid)
 orderRouter.get("/getseller", isLoggedInSeller,getallorders)
-module.exports={orderRouter}
+export default orderRouter

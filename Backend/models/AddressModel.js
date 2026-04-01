@@ -1,4 +1,4 @@
-const mongoose=require("mongoose")
+import  mongoose from "mongoose"
 const AddressSchema=new mongoose.Schema({
   userid:{type:String,required:true},
   firstname:{type:String,required:true},
@@ -11,4 +11,5 @@ const AddressSchema=new mongoose.Schema({
   country:{type:String,required:true},
  phone:{type:String,required:true},
 })
-module.exports=mongoose.models.address|| mongoose.model("address",AddressSchema)
+ const AddressModel=mongoose.models.address|| mongoose.model("address",AddressSchema)
+ export default AddressModel

@@ -1,12 +1,12 @@
-const express=require("express");
-const { addproduct, productlist, productbyid, changeinstock } = require("../controller/ProductController");
-const { upload } = require("../configs/multer");
-const { isLoggedInSeller } = require("../middlewares/userauth");
-const { updatecart } = require("../controller/userController");
+import express from "express"
+import { addproduct, productlist, productbyid, changeinstock } from"../controller/ProductController.js"
+import  upload from"../configs/multer.js"
+import  isLoggedInSeller from"../middlewares/sellerauth.js"
+import { updatecart }from"../controller/userController.js"
 const ProductRouter=express.Router();
-ProductRouter.post("/add",upload(["images"]),isLoggedInSeller,addproduct)
+ProductRouter.post("/add",upload.array("images"),isLoggedInSeller,addproduct)
 ProductRouter.get("/allprod",productlist)
 ProductRouter.get("/prodbyid",productbyid)
 ProductRouter.post("/stock",isLoggedInSeller,changeinstock)
 ProductRouter.post("/updatecart",updatecart)
-module.exports={ProductRouter}
+export default ProductRouter

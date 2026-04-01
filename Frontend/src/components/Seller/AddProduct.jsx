@@ -1,22 +1,53 @@
-import {useState} from "react"
+import {useState,useContext} from "react"
+import { Appcontext } from '../../context/Appcontext'
 import { assets, categories } from "../../assets/assets";
+import toast from "react-hot-toast"
 const AddProduct= () => {
   //files,name,description,category,price,offerprice
+  const {axios}=useContext(Appcontext)
   const [files,setfiles]=useState([])
   const [name,setname]=useState([])
   const [description,setdescription]=useState([])
   const [category,setcategory]=useState([])
   const [price,setprice]=useState([])
    const [offerprice,setofferprice]=useState([])
+   const submitHandler=async(e)=>{
+    try {
+          e.preventDefault();
+const prodData={name,description:description.split("\n"),category,price,offerprice}
+const formData=new FormData();
+formData.append('productdata',JSON.stringify(prodData))
+for(let i=0;i<files.length;i++){
+    formData.append('images',files[i])
+}
+const {data}=await axios.post("/api/product/add",formData)
+if(data.success) {
+    toast.success(data.message);
+setname("")
+setofferprice("")
+setdescription("")
+setprice("")
+setfiles([])}
+else{
+      toast.error(data.message)
+}
+
+
+    } catch (error) {
+        toast.error(error.message)
+        
+    }
+  
+   }
     return (
         <div className="py-10 flex flex-col justify-between bg-white">
-            <form className="md:p-10 p-4 space-y-5 max-w-lg">
+            <form className="md:p-10 p-4 space-y-5 max-w-lg" onSubmit={(e)=>submitHandler(e)}>
                 <div>
                     <p className="text-base font-medium">Product Image</p>
                     <div className="flex flex-wrap items-center gap-3 mt-2">
                         {Array(4).fill('').map((_, index) => (
                             <label key={index} htmlFor={`image${index}`}>
-                                <input accept="image/*" type="file" id={`image${index}`} hidden />
+                                <input  accept="image/*" type="file" id={`image${index}`} hidden />
                                 <img className="max-w-24 cursor-pointer" src={assets.upload_area}alt="uploadArea" width={100} height={120} />
                             </label>
                         ))}

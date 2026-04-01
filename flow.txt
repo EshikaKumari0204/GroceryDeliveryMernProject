@@ -1,7 +1,2 @@
-//ways to create a backend system 
-1.create a nodeproject using npm init -y ... install all the packages ...create the server.js and create a basic server...db.js for db connection(only add the connection string and use mongoose.connect)
-2.create all the database models in models folder
-3.handle the login,logout,register,checkfor authenticated or not ,token validation and adding userid in req.body so that it is known throughout 
-4.add seller login,logout,authentication check middlewares 
-..............----------------------............................
-//schema of address
+
+4.add product- create an object for product data .now add it to formData ,then add the images also make api call and send formData with it

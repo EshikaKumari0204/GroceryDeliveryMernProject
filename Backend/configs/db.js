@@ -1,4 +1,4 @@
-const mongoose=require("mongoose")
+import mongoose from "mongoose"
 const dbconnection=async()=>{
   try{
  const con=await mongoose.connect(`${process.env.MONGODB_URL}`);
@@ -8,4 +8,4 @@ const dbconnection=async()=>{
     console.log(err.message)
   }
 }
-module.exports=dbconnection
+export default dbconnection;

@@ -1,7 +1,7 @@
-const Usermodel=require("../models/Usermodel")
-const jwt=require("jsonwebtoken")
-const bcrypt=require("bcryptjs")
- const register=async(req,res)=>{
+import Usermodel from "../models/Usermodel.js"
+import jwt from "jsonwebtoken"
+import bcrypt from "bcryptjs"
+  export const register=async(req,res)=>{
   try{
  const {name,email,password}=req.body
   if(!email ||!name||!password){
@@ -33,7 +33,7 @@ const bcrypt=require("bcryptjs")
  return res.status(500).json({success:false,message:"Server error"})
   }
 }
-const login=async(req,res)=>{
+ export const login=async(req,res)=>{
   try{
  const {email,password}=req.body;
    if(!email ||!password){
@@ -58,14 +58,14 @@ const login=async(req,res)=>{
     console.log(err.message)
    return res.status(500).json({success:false,message:"Server error"})}
 }
-const isauth=async(req,res)=>{
+ export const isauth=async(req,res)=>{
   const id=req.id;
   const user=await Usermodel.findById(id).select('-password'); 
   console.log(user.email,user._id)
 res.json({success:true,user:{email:user.email,id:user._id}})
 }
 //clear the cookie by cookiename 
-const logout=async(req,res)=>{
+ export const logout=async(req,res)=>{
   try{
  res.clearCookie('token',{
       httpOnly:true,
@@ -80,7 +80,7 @@ const logout=async(req,res)=>{
 
   }
 }
-const updatecart=async(req,res)=>{
+ export const updatecart=async(req,res)=>{
  try{ const {id,cartitems}=req.body;
   const user=findByIdAndUpdate({id,cartitems})}
    catch(err){
@@ -88,4 +88,3 @@ const updatecart=async(req,res)=>{
     return res.json({success:false,message:"Server error"})
   }
 }
-module.exports={register,login,isauth,logout,updatecart}

@@ -2,10 +2,16 @@ import {useContext} from 'react'
 import {assets} from "../../assets/assets"
 import {Appcontext} from "../../context/Appcontext"
 import {NavLink,Outlet} from "react-router-dom"
+import toast from "react-hot-toast"
 const Layout = () => {
-  const {navigate,setisSeller}=useContext(Appcontext)
-  const logout=()=>{
-    setisSeller(false)
+  const {navigate,setisSeller,axios}=useContext(Appcontext)
+  const logout=async()=>{
+    try{  const {data}=await  axios("/api/seller/logout")
+    if(data.success) setisSeller(false)
+    else toast.error(data.message)}
+catch(err){
+    toast.error(err.message)
+}
   }
   const dashboardicon=(<img className="h-10 w-10"src={assets.add_icon}></img>)
    const overviewicon=(<img src={assets.product_list_icon}></img>)

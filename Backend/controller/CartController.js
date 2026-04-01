@@ -1,5 +1,5 @@
-const Usermodel = require("../models/Usermodel")
-const updatecart=async(req,res)=>{
+import Usermodel from "../models/Usermodel.js"
+export const updatecart=async(req,res)=>{
   try{
   const {userid,cartitems}=req.body
   const user=Usermodel.find(userid,{cartitems})
@@ -9,4 +9,3 @@ const updatecart=async(req,res)=>{
      return res.json({success:false,message:err.message})
   }
 }
-module.exports={updatecart}

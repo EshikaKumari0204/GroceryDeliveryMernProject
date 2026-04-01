@@ -1,4 +1,4 @@
-const jwt=require("jsonwebtoken")
+import  jwt  from "jsonwebtoken"
 const isLoggedIn=async(req,res,next)=>{
   try{
  const token=req.cookies.token;
@@ -15,5 +15,4 @@ next();
     return res.json({success:false,message:"invalid or expired token"})
   }
 }
-
-module.exports={isLoggedIn}
+export default isLoggedIn

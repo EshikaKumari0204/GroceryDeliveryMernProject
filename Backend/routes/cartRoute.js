@@ -1,6 +1,6 @@
-const express=require("express");
-const { updatecart } = require("../controller/CartController");
-const { isLoggedIn } = require("../middlewares/userauth");
+import express from "express"
+import { updatecart }  from"../controller/CartController.js"
+import  isLoggedIn  from"../middlewares/userauth.js"
 const cartRouter=express.Router();
 cartRouter.post("/updatecart",isLoggedIn,updatecart)
-module.exports={cartRouter}
+export default cartRouter

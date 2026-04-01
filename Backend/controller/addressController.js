@@ -1,6 +1,6 @@
 
-const AddressModel = require("../models/AddressModel")
-const addaddress=async(req,res)=>{
+import AddressModel from "../models/AddressModel.js"
+export const addaddress=async(req,res)=>{
   try{
  const {userid,address}=req.bodyl
  const newaddress=await AddressModel.create({...address,userid})
@@ -12,7 +12,7 @@ const addaddress=async(req,res)=>{
   }
  
 }
-const getaddress=async(req,res)=>{
+export const getaddress=async(req,res)=>{
   try {
    const {userid} =req.body;
    const addresses=await AddressModel.find({userid})
@@ -21,4 +21,3 @@ const getaddress=async(req,res)=>{
      return res.json({success:false,message:err.message})
   }
 }
-module.exports={addaddress,getaddress}

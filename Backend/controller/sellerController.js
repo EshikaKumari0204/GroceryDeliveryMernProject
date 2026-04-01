@@ -1,5 +1,5 @@
-const jwt=require("jsonwebtoken")
-const sellerLogin=async(req,res)=>{
+import jwt from "jsonwebtoken"
+ export const sellerLogin=async(req,res)=>{
   try{ const {email,password}=req.body;
   if(!email||!password)return res.json({success:false,message:"email and passoword are must"})
     if(email!=process.env.SELLER_EMAIL && password!=process.env.SELLER_PASSWORD)  return res.json({success:true,message:"invalid credentials"})
@@ -16,9 +16,8 @@ const sellerLogin=async(req,res)=>{
     console.log(err.message)
    return res.status(500).json({success:false,message:"Server error"})}
 }
-const isauth=async(req,res)=>{
+ export const isauth=async(req,res)=>{
   try{
- 
   return res.json({success:true})
   }
 
@@ -26,7 +25,7 @@ const isauth=async(req,res)=>{
     console.log(err.message)
    return res.status(500).json({success:false,message:"Server error"})}
 }
-const SellerLogout=async(req,res)=>{
+ export const SellerLogout=async(req,res)=>{
     try{
  res.clearCookie('SellerToken',{
       httpOnly:true,
@@ -41,4 +40,3 @@ const SellerLogout=async(req,res)=>{
     return res.json({success:false,message:"Server error"})
   }
 }
-module.exports={SellerLogout,sellerLogin,isauth}
