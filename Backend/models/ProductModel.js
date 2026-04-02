@@ -7,7 +7,6 @@ const ProductSchema=new mongoose.Schema({
   description:{type:Array,required:true},
   image:{type:Array,required:true},
   instock:{type: Boolean,default:true},
-
-},{timeStamps:true})
- const ProductModel= mongoose.models.prod||mongoose.model("product",ProductSchema)
+},{timestamps:true})
+ const ProductModel= mongoose.models.product||mongoose.model("product",ProductSchema)
  export default ProductModel

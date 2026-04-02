@@ -6,7 +6,7 @@ import dbconnection from "./configs/db.js";
 import useRouter from "./routes/userRoute.js";
 import sellerRouter from"./routes/sellerRoute.js"
 import  ProductRouter  from"./routes/productRoute.js"
-import connectcloudinary from"./configs/cloudinary.js"
+import {connectcloudinary} from"./configs/cloudinary.js"
 import  cartRouter  from"./routes/cartRoute.js"
 import  addressRouter  from"./routes/addressRoute.js"
 import  orderRouter from"./routes/orderRoute.js"
