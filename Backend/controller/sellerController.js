@@ -20,7 +20,6 @@ import jwt from "jsonwebtoken"
   try{
   return res.json({success:true})
   }
-
  catch(err){
     console.log(err.message)
    return res.status(500).json({success:false,message:"Server error"})}

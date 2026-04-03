@@ -20,7 +20,7 @@ formData.append('productdata',JSON.stringify(productdata))
 for(let i=0;i<files.length;i++){
     formData.append('images',files[i])
 }
-const {data}=await axios.post("/api/product/add",formData,{headers:{"Content-Type":"multipart-form-data"}})
+const {data}=await axios.post("/api/product/add",formData)
 if(data.success) {
     toast.success(data.message);
 setname("")

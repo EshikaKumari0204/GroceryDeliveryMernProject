@@ -6,18 +6,19 @@ import dbconnection from "./configs/db.js";
 import useRouter from "./routes/userRoute.js";
 import sellerRouter from"./routes/sellerRoute.js"
 import  ProductRouter  from"./routes/productRoute.js"
-import {connectcloudinary} from"./configs/cloudinary.js"
+// import {connectcloudinary} from"./configs/cloudinary.js"
 import  cartRouter  from"./routes/cartRoute.js"
 import  addressRouter  from"./routes/addressRoute.js"
 import  orderRouter from"./routes/orderRoute.js"
 const  app=express();
 await dbconnection()
-await connectcloudinary()
+//  connectcloudinary()
 const originAllowed = ["http://localhost:5173"];
 app.use(cors({
   origin: originAllowed,
   credentials: true
 }));
+app.use("/uploads",express.static("uploads"))
 app.use(cookieparser());
 app.use(express.json())
 app.get("/",(req,res)=>{

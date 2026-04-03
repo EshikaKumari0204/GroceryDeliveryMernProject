@@ -1,20 +1,14 @@
 import ProductModel from "../models/ProductModel.js"
-import {cloudinary} from "../configs/cloudinary.js"
  export const addproduct=async(req,res)=>{
   try{
   const productdata=JSON.parse(req.body.productdata)
   const images=req.files
-  console.log(req.files,"images by backend")
-  console.log(cloudinary)
-  console.log("HERE IS UPLOADER",cloudinary.uploader)
-  console.log("Testing config",cloudinary.config().cloud_name)
-  let imageurl=await Promise.all(images.map(async(item)=>{
-    let result=await cloudinary.uploader.upload(item.path,{resource_type:'auto'});
-    return result.secure_url;
-  }))
-  console.log(imageurl,"images uploaded")
-  const item=await ProductModel.create({...productdata,image:imageurl})
-  console.log(item)
+
+ const imagepaths=images.map(item=>"/"+item.path.replace(/\\/g,"/"))
+ console.log(imagepath,"paths")
+  const item=await ProductModel.create({...productdata,image:imagepaths})
+  console.log("item created ",item)
+
   return res.json({success:true,message:"item added"})
   }
   catch(err){
