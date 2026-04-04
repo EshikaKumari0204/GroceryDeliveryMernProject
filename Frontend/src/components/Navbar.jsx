@@ -3,12 +3,21 @@ import { Appcontext } from '../context/Appcontext';
 import { assets } from '../assets/assets';
 import {NavLink} from "react-router-dom";
 import { TiShoppingCart } from "react-icons/ti";
+import {toast} from "react-hot-toast"
 const Navbar=()=>{
  const [open, setOpen] = useState(false);
- const {user,setuser,navigate,setUserLogin,searchquery,setsearchquery,totalcartitems}=useContext(Appcontext);
- const logout=()=>{
-    setuser(null);
+ const {user,setuser,navigate,setUserLogin,searchquery,setsearchquery,totalcartitems,axios}=useContext(Appcontext);
+ const logout=async()=>{
+    const {data}=await axios("/api/user/logout")
+    console.log("logout",data)
+    if(data.success){
+  setuser(null);
     navigate("/");
+    }
+    else {
+        toast.success("logout unsuccessful")
+    }
+  
  }
  useEffect(()=>{
 if(searchquery.length>0)

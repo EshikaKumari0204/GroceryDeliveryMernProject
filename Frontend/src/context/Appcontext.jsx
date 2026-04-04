@@ -16,8 +16,17 @@ const [cartitems,setcartitems]=useState({});
 const [searchquery,setsearchquery]=useState("");
 
 const fetchproductitems=async()=>{
-  setproductitems(dummyProducts);
+  try {
+  const {data}=await axios("/api/product/allprod")
+  setproductitems(data.products);
+  } catch (error) {
+   console.log(error.message)
+  }
+ 
+
 }
+
+
   const fetchseller= async()=>{ 
     try{
 const {data}=await axios.get("/api/seller/is-auth")
@@ -28,12 +37,22 @@ const {data}=await axios.get("/api/seller/is-auth")
      setisSeller(false)
     console.log(err.message)
   }}
+   const fetchuser= async()=>{ 
+    try{
+const {data}=await axios.get("/api/user/is-auth")
+   if(data.success) {setuser(data.user) ;}
+    else{ setuser(null)}
+    }
+  catch(err){
+     setuser(null)
+  console.log(err.message)
+  }
+}
   useEffect(()=>{
+    fetchuser()
    fetchseller()
   fetchproductitems();
   })
-
-
 const addtocart=(id)=>{
   const products=structuredClone(cartitems);
     console.log(products)

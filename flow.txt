@@ -1,3 +1,6 @@
 
 4.add product- create an object for product data .now add it to formData ,then add the images also make api call and send formData with it
 5.now for all products -make api call and show all the data (fetch products in appcontext)
+
+
+
