@@ -4,9 +4,9 @@ import ProductModel from "../models/ProductModel.js"
   const productdata=JSON.parse(req.body.productdata)
   const images=req.files
  const imagepaths=images.map(item=>"/"+item.path.replace(/\\/g,"/"))
- console.log(imagepaths,"paths")
+ 
   const item=await ProductModel.create({...productdata,image:imagepaths})
-  console.log("item created ",item)
+ 
 
   return res.json({success:true,message:"item added"})
   }
@@ -34,9 +34,7 @@ import ProductModel from "../models/ProductModel.js"
  export const changeinstock=async(req,res)=>{
   try{
      const {id,instock}=req.body;
-    
-  const product=ProductModel.findOneAndUpdate({_id:id},{instock})
-
+  const product=await ProductModel.findOneAndUpdate({_id:id},{instock})
   return res.json({success:true,message:"stock updated"})}
   catch(err){
     return res.json({success:false,message:err.message})

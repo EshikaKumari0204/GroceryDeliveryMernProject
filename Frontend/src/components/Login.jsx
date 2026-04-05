@@ -18,13 +18,14 @@ const Login = () => {
             setuser(data.user);
             navigate("/");
             setUserLogin(false)
-             toast.success("successfull done")
+             toast.success("logged in successfully")
         }
         else{
              toast.error(data.message)
         }
         }
         catch(err){
+            console.log(err.message)
             toast.error(err.message)
         }
     }

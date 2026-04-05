@@ -1,6 +1,6 @@
 
-4.add product- create an object for product data .now add it to formData ,then add the images also make api call and send formData with it
-5.now for all products -make api call and show all the data (fetch products in appcontext)
-
-
-
+1.make updatecart function in context file(use useEffect) -cartitems is the dependency check if user is present then only call the function
+2.do that add adress function  -makeapi call and then navigate to /cart page
+also make a check in useEffect that if user is not there navigate to cart page -address,showaddress and select address
+3.now get the user address and show it (setaddress) if there are mulitple address of a user in database just select the  first one as selected address
+4.place order-check if address is selected ,if ordertype is cod call the api for ordercod with userid and for each product in cart send its productid and quantity,address as selected address id

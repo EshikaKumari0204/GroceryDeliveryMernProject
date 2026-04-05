@@ -38,7 +38,7 @@ import bcrypt from "bcryptjs"
  export const login=async(req,res)=>{
   try{
  const {email,password}=req.body;
- console.log(req.body)
+
    if(!email ||!password){
     return res.json({success:false,message:"Empty fields"})
   }
@@ -66,10 +66,9 @@ import bcrypt from "bcryptjs"
   const user=await Usermodel.findById(id).select('-password'); 
 res.json({success:true,user:{email:user.email,id:user._id}})
 }
-//clear the cookie by cookiename 
+
  export const logout=async(req,res)=>{
   try{
-    console.log("logout called")
  res.clearCookie('token',{
       httpOnly:true,
       secure: process.env.ENVIRONMENT === "production",

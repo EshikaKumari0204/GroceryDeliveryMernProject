@@ -1,7 +1,6 @@
 import {createContext,useState,useEffect} from 'react'
 import {useNavigate} from 'react-router-dom'
 import {toast} from "react-hot-toast"
-import {dummyProducts} from "../assets/assets"
 import axios from "axios"
 axios.defaults.baseURL=import.meta.env.VITE_BACKEND_URL
 axios.defaults.withCredentials=true
@@ -14,19 +13,15 @@ const [showUserLogin,setUserLogin]=useState(false);
 const [productitems,setproductitems]=useState([]);
 const [cartitems,setcartitems]=useState({});
 const [searchquery,setsearchquery]=useState("");
-
 const fetchproductitems=async()=>{
   try {
   const {data}=await axios("/api/product/allprod")
   setproductitems(data.products);
+
   } catch (error) {
    console.log(error.message)
   }
- 
-
 }
-
-
   const fetchseller= async()=>{ 
     try{
 const {data}=await axios.get("/api/seller/is-auth")
@@ -40,7 +35,7 @@ const {data}=await axios.get("/api/seller/is-auth")
    const fetchuser= async()=>{ 
     try{
 const {data}=await axios.get("/api/user/is-auth")
-   if(data.success) {setuser(data.user) ;}
+   if(data.success) {await setuser(data.user) ; console.log(user) }
     else{ setuser(null)}
     }
   catch(err){
@@ -48,11 +43,29 @@ const {data}=await axios.get("/api/user/is-auth")
   console.log(err.message)
   }
 }
+
   useEffect(()=>{
     fetchuser()
    fetchseller()
   fetchproductitems();
-  })
+  },[])
+
+    const cartupdate=async()=>{
+    try {
+   
+       const {data}=await axios.post("/api/cart/updatecart",{userid:user._id,cartitems});
+        
+    if(data.sucess) toast.success("cart updated")
+      else toast.error(data.message)
+    } catch (error) {
+      toast.error(error.message)
+    }
+   
+  }
+  useEffect(()=>{
+    cartupdate()
+  },[cartitems])
+
 const addtocart=(id)=>{
   const products=structuredClone(cartitems);
     console.log(products)
@@ -71,7 +84,6 @@ const updatecart=(quantity,id)=>{
   setcartitems(products)
   toast.success("cart updated")
 }
-
 const removetocart=(id)=>{
   const products=structuredClone(cartitems);
    if(products[id]){

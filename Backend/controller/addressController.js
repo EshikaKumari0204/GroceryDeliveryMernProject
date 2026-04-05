@@ -1,7 +1,7 @@
 import AddressModel from "../models/AddressModel.js"
 export const addaddress=async(req,res)=>{
   try{
- const {userid,address}=req.bodyl
+ const {userid,address}=req.body
  const newaddress=await AddressModel.create({...address,userid})
  return res.json({success:true,message:"address added successfully"})
   }

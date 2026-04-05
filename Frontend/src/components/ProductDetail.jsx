@@ -8,18 +8,20 @@ const ProductDetail = () => {
   const id=params._id;
   const categ=params.category;
   const [relatedproducts,setrelatedproducts]=useState([])
-  //const productitems will be then fetched from the state 
-  const productitems=dummyProducts;
-  const {addtocart,navigate}=useContext(Appcontext)
+  const {addtocart,navigate,productitems}=useContext(Appcontext)
+   console.log(productitems)
+
   let product=productitems.filter((prod)=>prod._id===id)
-  product=product[0]
-    const [thumbnail, setThumbnail] = useState(product.image[0]);
+     product=product[0]
+      console.log(`http://localhost:4000${product.image[0]}`)
+    const [thumbnail, setThumbnail] = useState(`http://localhost:4000${product.image[0]}`);
       useEffect(()=>{
-const relatedstuff=dummyProducts.filter((prod)=>prod.category===categ)
+const relatedstuff=productitems.filter((prod)=>prod.category===categ)
   setrelatedproducts(relatedstuff)
   },[id])
    useEffect(()=>{
-  setThumbnail(product.image[0])
+    if(product && product.image && product.image.length>0)
+  setThumbnail(`http://localhost:4000${product.image[0]}`)
   },[product])
   return (
     product && (
@@ -36,7 +38,7 @@ const relatedstuff=dummyProducts.filter((prod)=>prod.category===categ)
                     <div className="flex flex-col gap-3">
                         {product.image.map((image, index) => (
                             <div key={index} onClick={() => setThumbnail(image)} className="border max-w-24 border-gray-500/30 rounded overflow-hidden cursor-pointer" >
-                                <img src={image} alt={`Thumbnail ${index + 1}`} />
+                                <img src={`http://localhost:4000${image}`} alt={`Thumbnail ${index + 1}`} />
                             </div>
                         ))}
                     </div>

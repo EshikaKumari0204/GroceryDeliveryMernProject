@@ -37,7 +37,7 @@ const Cart = () => {
                     <div key={index} className="grid grid-cols-[2fr_1fr_1fr] text-gray-500 items-center text-sm md:text-base font-medium pt-3">
                         <div className="flex items-center md:gap-6 gap-3">
                             <div className="cursor-pointer w-24 h-24 flex items-center justify-center border border-gray-300 rounded overflow-hidden">
-                                <img className="max-w-full h-full object-cover" src={product.image} alt={product.name} />
+                                <img className="max-w-full h-full object-cover" src={`http://localhost:4000${product.image}`} alt={product.name} />
                             </div>
                             <div>
                                 <p className="hidden md:block font-semibold">{product.name}</p>
@@ -75,7 +75,7 @@ const Cart = () => {
                 <div className="mb-6">
                     <p className="text-sm font-medium uppercase">Delivery Address</p>
                     <div className="relative flex justify-between items-start mt-2">
-                        <p className="text-gray-500">No address found</p>
+                        <p className="text-gray-500"> {`${address.street},${address.city},${address.state},${address.country}`}</p>
                         <button onClick={() => setShowAddress(!showAddress)} className="text-amber-600 hover:underline cursor-pointer">
                             Change
                         </button>
