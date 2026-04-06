@@ -64,7 +64,8 @@ import bcrypt from "bcryptjs"
  export const isauth=async(req,res)=>{
   const id=req.id;
   const user=await Usermodel.findById(id).select('-password'); 
-res.json({success:true,user:{email:user.email,id:user._id}})
+ 
+res.json({success:true,user})
 }
 
  export const logout=async(req,res)=>{

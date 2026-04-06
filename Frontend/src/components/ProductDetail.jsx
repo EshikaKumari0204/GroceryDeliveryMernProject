@@ -9,7 +9,6 @@ const ProductDetail = () => {
   const categ=params.category;
   const [relatedproducts,setrelatedproducts]=useState([])
   const {addtocart,navigate,productitems}=useContext(Appcontext)
-   console.log(productitems)
 
   let product=productitems.filter((prod)=>prod._id===id)
      product=product[0]

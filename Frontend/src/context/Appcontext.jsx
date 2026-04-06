@@ -18,6 +18,7 @@ const fetchproductitems=async()=>{
   const {data}=await axios("/api/product/allprod")
   setproductitems(data.products);
 
+
   } catch (error) {
    console.log(error.message)
   }
@@ -33,9 +34,10 @@ const {data}=await axios.get("/api/seller/is-auth")
     console.log(err.message)
   }}
    const fetchuser= async()=>{ 
-    try{
+    
+    try{  
 const {data}=await axios.get("/api/user/is-auth")
-   if(data.success) {await setuser(data.user) ; console.log(user) }
+   if(data.success) {setuser(data.user) ; setcartitems(data.user.cartitems || {})}
     else{ setuser(null)}
     }
   catch(err){
@@ -45,17 +47,23 @@ const {data}=await axios.get("/api/user/is-auth")
 }
 
   useEffect(()=>{
-    fetchuser()
+   fetchuser()
+  
    fetchseller()
   fetchproductitems();
   },[])
 
+
+
     const cartupdate=async()=>{
     try {
-   
-       const {data}=await axios.post("/api/cart/updatecart",{userid:user._id,cartitems});
-        
-    if(data.sucess) toast.success("cart updated")
+      const curruser=user
+     
+    
+       const {data}=await axios.post("/api/cart/updatecart",{userid:curruser._id,cartitems});
+       
+       console.log(data)
+    if(data.success) {console.log("updated cart")}
       else toast.error(data.message)
     } catch (error) {
       toast.error(error.message)
@@ -63,17 +71,23 @@ const {data}=await axios.get("/api/user/is-auth")
    
   }
   useEffect(()=>{
+    if(user)
     cartupdate()
+
   },[cartitems])
 
 const addtocart=(id)=>{
+
   const products=structuredClone(cartitems);
-    console.log(products)
+
   if(products[id]){
+ 
     products[id]+=1;
   }
   else{
       products[id]=1;
+     
+      
   }
   setcartitems(products)
   toast.success("added to cart")
@@ -105,10 +119,12 @@ let totalcount=0
 }
 
 const totalpriceofcart=()=>{
+
  let totalprice=0
+
  for(const item in cartitems){
   const prod=productitems.find((prod)=>prod._id===item)
-  if(cartitems[item]>0) totalprice+=prod.offerPrice*cartitems[item]
+  if(cartitems[item]>0) totalprice+=(prod.offerprice*cartitems[item])
  }
    return totalprice
 }

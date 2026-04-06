@@ -2,10 +2,10 @@ import {useState,useEffect,useContext} from 'react'
 import { assets } from '../assets/assets'
 import { Appcontext } from '../context/Appcontext'
 const Cart = () => {
-    const [address, setAddress] = useState({"street":"Bajrang Chowk","city":"Bgs","state":"Bihar","country":"India"})
+    const [address, setAddress] = useState([])
     const [showAddress, setShowAddress] = useState(false)
-    const [selectedAddress, setselectedAddress] = useState(false)
-    const {navigate,productitems,cartitems,setcartitems,totalcartitems,totalpriceofcart,removetocart}=useContext(Appcontext)
+    const [selectedAddress, setselectedAddress] = useState(null)
+    const {navigate,productitems,cartitems,setcartitems,totalcartitems,totalpriceofcart,removetocart,axios,user}=useContext(Appcontext)
     const [cartarr,setcartarr]=useState([])
     const [paymentoption,setpaymentoption]=useState(null)
     const getcartitems=()=>{
@@ -17,8 +17,24 @@ const Cart = () => {
       }
       setcartarr(temparr)
     }
+    const getAddress=async()=>{
+        try {
+            const userid=user._id
+            console.log(userid)
+              const {data}=await axios.get("/api/address/get",{userid}) 
+              console.log("data",data)
+    setAddress(data.addresses)
+    setselectedAddress(data.addresses[0])
+            
+        } catch (error) {
+            console.log(error.message)
+            
+        }
+  
+}
     useEffect(()=>{
         if(productitems.length>0 && cartitems) getcartitems()
+            // if(address)getAddress()
     },[cartitems])
     return (
         <div className="flex flex-col md:flex-row py-16 max-w-6xl w-full px-6 mx-auto">
@@ -45,16 +61,16 @@ const Cart = () => {
                                     
                                     <div className='flex items-center'>
                                         <p>Qty:</p>
-                                        <select className='outline-none' value={product.quantity}>
-                                            {Array(product.quantity).fill('').map((_, index) => (
-                                                <option key={index} >{index + 1}</option>
+                                        <select className='outline-none' >
+                                            {Array(10).fill('').map((_, index) => (
+                                                <option key={index} value={index + 1} >{index + 1}</option>
                                             ))}
                                         </select>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <p className="text-center">₹{product.offerPrice * product.quantity}</p>
+                        <p className="text-center">₹{product.offerprice * product.quantity}</p>
                         <button className="cursor-pointer mx-auto">
                             <img src={assets. remove_icon} alt="removeprod" onClick={()=>removetocart(product._id)} />
                         </button>

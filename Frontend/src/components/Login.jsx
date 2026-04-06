@@ -12,7 +12,7 @@ const Login = () => {
         try{
  e.preventDefault();
         const {data}=await axios.post(`/api/user/${state}`,{name:name,email:email,password:pass})
-        console.log(state)
+       
         console.log("data",data)
         if(data.success){
             setuser(data.user);

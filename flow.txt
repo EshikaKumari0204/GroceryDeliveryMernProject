@@ -4,3 +4,4 @@
 also make a check in useEffect that if user is not there navigate to cart page -address,showaddress and select address
 3.now get the user address and show it (setaddress) if there are mulitple address of a user in database just select the  first one as selected address
 4.place order-check if address is selected ,if ordertype is cod call the api for ordercod with userid and for each product in cart send its productid and quantity,address as selected address id
+......................ADDRESS FEATURE .......................................
