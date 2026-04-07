@@ -54,14 +54,11 @@ const {data}=await axios.get("/api/user/is-auth")
   },[])
 
 
-
+//GETTING THE CART ITEMS FOR THE USER FROM THE DATABASE 
     const cartupdate=async()=>{
     try {
       const curruser=user
-     
-    
        const {data}=await axios.post("/api/cart/updatecart",{userid:curruser._id,cartitems});
-       
        console.log(data)
     if(data.success) {console.log("updated cart")}
       else toast.error(data.message)

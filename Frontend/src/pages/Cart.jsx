@@ -19,9 +19,8 @@ const Cart = () => {
     }
     const getAddress=async()=>{
         try {
-            const userid=user._id
-            console.log(userid)
-              const {data}=await axios.get("/api/address/get",{userid}) 
+    
+              const {data}=await axios.get("/api/address/get") 
               console.log("data",data)
     setAddress(data.addresses)
     setselectedAddress(data.addresses[0])

@@ -1,7 +1,16 @@
-
-1.make updatecart function in context file(use useEffect) -cartitems is the dependency check if user is present then only call the function
-2.do that add adress function  -makeapi call and then navigate to /cart page
-also make a check in useEffect that if user is not there navigate to cart page -address,showaddress and select address
-3.now get the user address and show it (setaddress) if there are mulitple address of a user in database just select the  first one as selected address
-4.place order-check if address is selected ,if ordertype is cod call the api for ordercod with userid and for each product in cart send its productid and quantity,address as selected address id
-......................ADDRESS FEATURE .......................................
+............1/2 hour..............
+1.make api call for the update cart feature and call it in useEffect
+2.add click feature on quantity in cart so that we can increase the quantity of the prod from there also
+3.add address api call .alsoif user is not there navigate to cart page
+4.get user address apicall find the addresses for  the user from req.user and return set of addresses .set the address state and also set the selected address as the first address returned .call this in useffect when user is present and also add user as dependency
+5.place order api call -check is address is selcted . then make api call when payment method is COD .make apicall with user cartitems each product id and each product quentity.set cartitems empty when order placed and navigate to myorders page
+6.now show the orders on myorder page .make apicall.call it in useEffect when user is present 
+7.make api call for the seller also to get all order and show on seller dashboard page
+...............1/2 hour....................
+go to stripe create a account and then get the publishable and secret key
+add them to env 
+create place order by stripe function in order controller
+add {origin} =req.headers .create a product data array and add all product with name,quantity and price in that as object into that array
+create a stripeinstance by giving secret key create line items for stripe.create session .return session url in response  session.url .add routes 
+make api callfor that in cart for payment mode =online on successful..window.location.replace(data.url)
+CREATE LOADING PAGE add it to the route on /loader url

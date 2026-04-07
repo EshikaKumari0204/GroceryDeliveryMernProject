@@ -15,7 +15,8 @@ export const addaddress=async(req,res)=>{
 }
 export const getaddress=async(req,res)=>{
   try {
-   const {userid} =req.body;
+   const {userid} =req.user;
+   
    console.log(req.body,"ye bheja ")
    const addresses=await AddressModel.find({userid})
    console.log(addresses,"ye mila")
