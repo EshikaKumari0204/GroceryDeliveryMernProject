@@ -9,15 +9,14 @@ const Navbar=()=>{
  const {user,setuser,navigate,setUserLogin,searchquery,setsearchquery,totalcartitems,axios}=useContext(Appcontext);
  const logout=async()=>{
     const {data}=await axios("/api/user/logout")
-    console.log("logout",data)
     if(data.success){
-  setuser(null);
+    setuser(null);
     navigate("/");
+    toast.success("logout successful")
     }
     else {
-        toast.success("logout unsuccessful")
+        toast.error("logout unsuccessful")
     }
-  
  }
  useEffect(()=>{
 if(searchquery.length>0)
@@ -64,7 +63,7 @@ navigate("/products")
                 <NavLink to="/contact" onClick={() => setOpen(false)} className="block">Contact</NavLink>
                 {user ? <button onClick={logout} className="cursor-pointer px-6 py-2 mt-2 bg-amber-600 hover:bg-amber-800 transition text-white rounded-full text-sm">
                     Logout
-                </button>: <button onClick={()=>{setUserLogin(true)}} className="cursor-pointer px-6 py-2 mt-2 bg-amber-600 hover:bg-amber-800 transition text-white rounded-full text-sm">
+                </button>: <button onClick={()=>{setOpen(false);setUserLogin(true)}} className="cursor-pointer px-6 py-2 mt-2 bg-amber-600 hover:bg-amber-800 transition text-white rounded-full text-sm">
                     Login
                 </button>}
             </div>

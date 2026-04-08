@@ -26,6 +26,7 @@ const App=()=>{
     {!isSellerPath?<Navbar/>:""} 
     {showUserLogin?<Login></Login>:null}
     <Toaster></Toaster>
+    <div >
     <Routes>
       <Route path="/" element={<Home isSellerPath={isSellerPath}/>}></Route>
       <Route path="/products" element={<Products isSellerPath={isSellerPath}/>}></Route>
@@ -39,7 +40,7 @@ const App=()=>{
            <Route path="chat" element={isSeller?<AllOrders/>:null}></Route>
              <Route path="overview" element={isSeller?<SellerallProd/>:null}></Route>
          </Route>
-    </Routes>
+    </Routes> </div>
 
   {!isSellerPath?<Footer/>:""} 
     </>

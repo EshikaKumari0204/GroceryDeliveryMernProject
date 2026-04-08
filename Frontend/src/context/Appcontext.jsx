@@ -6,23 +6,25 @@ axios.defaults.baseURL=import.meta.env.VITE_BACKEND_URL
 axios.defaults.withCredentials=true
 export const Appcontext=createContext();
 export const AppContextProvider=({children})=>{
+  //STATES 
 const navigate=useNavigate();
 const [user,setuser]=useState(null);
-const [isSeller,setisSeller]=useState();
-const [showUserLogin,setUserLogin]=useState(false);
+const [isSeller,setisSeller]=useState();  // default me false
+const [showUserLogin,setUserLogin]=useState(false); //default false 
 const [productitems,setproductitems]=useState([]);
 const [cartitems,setcartitems]=useState({});
 const [searchquery,setsearchquery]=useState("");
+//FUNCTIONS 
+
 const fetchproductitems=async()=>{
   try {
   const {data}=await axios("/api/product/allprod")
   setproductitems(data.products);
-
-
   } catch (error) {
    console.log(error.message)
   }
 }
+
   const fetchseller= async()=>{ 
     try{
 const {data}=await axios.get("/api/seller/is-auth")
@@ -33,6 +35,7 @@ const {data}=await axios.get("/api/seller/is-auth")
      setisSeller(false)
     console.log(err.message)
   }}
+
    const fetchuser= async()=>{ 
     
     try{  
@@ -48,18 +51,17 @@ const {data}=await axios.get("/api/user/is-auth")
 
   useEffect(()=>{
    fetchuser()
-  
    fetchseller()
   fetchproductitems();
   },[])
 
 
-//GETTING THE CART ITEMS FOR THE USER FROM THE DATABASE 
+ 
     const cartupdate=async()=>{
     try {
       const curruser=user
        const {data}=await axios.post("/api/cart/updatecart",{userid:curruser._id,cartitems});
-       console.log(data)
+      
     if(data.success) {console.log("updated cart")}
       else toast.error(data.message)
     } catch (error) {
@@ -72,13 +74,10 @@ const {data}=await axios.get("/api/user/is-auth")
     cartupdate()
 
   },[cartitems])
-
+//cartitems have product id and their quantity 
 const addtocart=(id)=>{
-
   const products=structuredClone(cartitems);
-
   if(products[id]){
- 
     products[id]+=1;
   }
   else{
@@ -89,6 +88,7 @@ const addtocart=(id)=>{
   setcartitems(products)
   toast.success("added to cart")
 }
+//change the product item quantity
 const updatecart=(quantity,id)=>{
   const products=structuredClone(cartitems);
   products[id]=quantity
@@ -125,7 +125,7 @@ const totalpriceofcart=()=>{
  }
    return totalprice
 }
-const value={user,setuser,isSeller,setisSeller,navigate,showUserLogin,setUserLogin,fetchproductitems,addtocart,removetocart,searchquery,setsearchquery,productitems,totalcartitems,totalpriceofcart,cartitems,setcartitems,axios}
+const value={user,setuser,isSeller,setisSeller,navigate,showUserLogin,setUserLogin,fetchproductitems,addtocart,removetocart,searchquery,setsearchquery,productitems,totalcartitems,totalpriceofcart,cartitems,setcartitems,axios,updatecart}
  return <Appcontext.Provider value={value}>{children}</Appcontext.Provider>
 }
 

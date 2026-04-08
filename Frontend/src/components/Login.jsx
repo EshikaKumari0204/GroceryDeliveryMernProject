@@ -2,9 +2,9 @@ import {useState,useContext} from "react"
 import { Appcontext } from "../context/Appcontext"
 import {toast} from "react-hot-toast"
 const Login = () => {
+      const {setUserLogin,setuser,axios,navigate}=useContext(Appcontext)
     //create state for all the input fields 
     const [state, setState] = useState("login")
-    const {setUserLogin,setuser,axios,navigate}=useContext(Appcontext)
     const [name,setname]=useState(null);
     const [email,setemail]=useState(null);
     const [pass,setpass]=useState(null);

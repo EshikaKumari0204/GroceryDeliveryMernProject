@@ -5,15 +5,19 @@ const Cart = () => {
     const [address, setAddress] = useState([])
     const [showAddress, setShowAddress] = useState(false)
     const [selectedAddress, setselectedAddress] = useState(null)
-    const {navigate,productitems,cartitems,setcartitems,totalcartitems,totalpriceofcart,removetocart,axios,user}=useContext(Appcontext)
+    const {navigate,productitems,cartitems,setcartitems,totalcartitems,totalpriceofcart,removetocart,axios,user,updatecart}=useContext(Appcontext)
     const [cartarr,setcartarr]=useState([])
     const [paymentoption,setpaymentoption]=useState(null)
     const getcartitems=()=>{
+        console.log("get cart items")
          const temparr=[]
+          console.log(" cart items",cartitems)
       for(const item in cartitems){
         const product=productitems.find((prod)=>prod._id==item)
-        product.quantity=cartitems[item]
+        console.log(product)
+        // product.quantity=cartitems[item]
         temparr.push(product)
+        
       }
       setcartarr(temparr)
     }
@@ -32,6 +36,7 @@ const Cart = () => {
   
 }
     useEffect(()=>{
+      
         if(productitems.length>0 && cartitems) getcartitems()
             // if(address)getAddress()
     },[cartitems])
@@ -60,7 +65,8 @@ const Cart = () => {
                                     
                                     <div className='flex items-center'>
                                         <p>Qty:</p>
-                                        <select className='outline-none' >
+                                        <select className='outline-none'  >
+                                            {/* value={product.quantity} onChange={(e)=>updatecart(product._id,e.target.value)} */}
                                             {Array(10).fill('').map((_, index) => (
                                                 <option key={index} value={index + 1} >{index + 1}</option>
                                             ))}

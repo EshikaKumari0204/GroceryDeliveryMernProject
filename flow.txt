@@ -1,5 +1,4 @@
 ............1/2 hour..............
-1.make api call for the update cart feature and call it in useEffect
 2.add click feature on quantity in cart so that we can increase the quantity of the prod from there also
 3.add address api call .alsoif user is not there navigate to cart page
 4.get user address apicall find the addresses for  the user from req.user and return set of addresses .set the address state and also set the selected address as the first address returned .call this in useffect when user is present and also add user as dependency
