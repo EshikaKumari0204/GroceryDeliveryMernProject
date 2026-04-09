@@ -20,9 +20,9 @@ import AddProduct from "./components/Seller/AddProduct";
 import AllOrders from "./components/Seller/AllOrders";
 import SellerallProd from "./components/Seller/SellerallProd";
 const App=()=>{
-  const {showUserLogin,isSeller,}=useContext(Appcontext)
+  const {showUserLogin,isSeller}=useContext(Appcontext)
   const isSellerPath=useLocation().pathname.includes("seller")
-  return ( <>
+  return (<>
     {!isSellerPath?<Navbar/>:""} 
     {showUserLogin?<Login></Login>:null}
     <Toaster></Toaster>
