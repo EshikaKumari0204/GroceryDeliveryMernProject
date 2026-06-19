@@ -8,5 +8,4 @@ ProductRouter.post("/add",upload.array("images",4),isLoggedInSeller,addproduct)
 ProductRouter.get("/allprod",productlist)
 ProductRouter.get("/prodbyid",productbyid)
 ProductRouter.post("/stock",isLoggedInSeller,changeinstock)
-ProductRouter.post("/updatecart",updatecart)
 export default ProductRouter

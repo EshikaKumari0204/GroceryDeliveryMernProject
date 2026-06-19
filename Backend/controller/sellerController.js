@@ -1,8 +1,8 @@
 import jwt from "jsonwebtoken"
  export const sellerLogin=async(req,res)=>{
   try{ const {email,password}=req.body;
-  if(!email||!password)return res.json({success:false,message:"email and passoword are must"})
-    if(email!=process.env.SELLER_EMAIL && password!=process.env.SELLER_PASSWORD)  return res.json({success:true,message:"invalid credentials"})
+  if(!email||!password)return res.json({success:false,message:"email and password both are required"})
+    if(email!=process.env.SELLER_EMAIL || password!=process.env.SELLER_PASSWORD)  return res.json({success:false,message:"invalid credentials"})
     const token=jwt.sign({email},process.env.JWT_SECRET,{expiresIn:"7d"}
          );
          res.cookie('SellerToken',token,{
@@ -39,3 +39,4 @@ import jwt from "jsonwebtoken"
     return res.json({success:false,message:"Server error"})
   }
 }
+

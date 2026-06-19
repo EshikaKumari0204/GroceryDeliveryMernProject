@@ -4,31 +4,30 @@ import ProductModel from "../models/ProductModel.js"
   const productdata=JSON.parse(req.body.productdata)
   const images=req.files
  const imagepaths=images.map(item=>"/"+item.path.replace(/\\/g,"/"))
- 
   const item=await ProductModel.create({...productdata,image:imagepaths})
- 
-
-  return res.json({success:true,message:"item added"})
+  return res.json({success:true,message:"Product added"})
   }
   catch(err){
     console.log(err)
-     return res.json({success:false,message:err.message})
+     return res.json({success:false,message:"Server error"})
   }
 }
  export const productlist=async(req,res)=>{
   try{const products=await ProductModel.find({})
   return res.json({success:true,products})}
-  catch(err){
-    return res.json({success:false,message:err.message})
+ catch(err){
+    console.log(err)
+     return res.json({success:false,message:"Server error"})
   }
 }
  export const productbyid=async(req,res)=>{
   try{
-    const {id}=req.id;
+  const {id}=req.body;
   const product=await ProductModel.findById(id)
-   return res.json({success:true,product})}
-  catch(err){
-    return res.json({success:false,message:err.message})
+  return res.json({success:true,product})}
+ catch(err){
+    console.log(err)
+     return res.json({success:false,message:"Server error"})
   }
 }
  export const changeinstock=async(req,res)=>{
@@ -37,6 +36,7 @@ import ProductModel from "../models/ProductModel.js"
   const product=await ProductModel.findOneAndUpdate({_id:id},{instock})
   return res.json({success:true,message:"stock updated"})}
   catch(err){
-    return res.json({success:false,message:err.message})
+    console.log(err.message)
+    return res.json({success:false,message:"Server Error"})
 }
 }

@@ -9,7 +9,8 @@ const isLoggedInSeller=async(req,res,next)=>{
   next();
   }
    catch(err){
-    return res.json({success:false,message:err.message})
+     console.log(err.message)
+    return res.json({success:false,message:"Server error"})
   }
 }
 export default isLoggedInSeller
