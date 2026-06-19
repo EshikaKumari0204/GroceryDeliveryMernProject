@@ -8,7 +8,7 @@ const AllCategory = () => {
   const {productitems}=useContext(Appcontext)
   console.log(productitems)
   return (
-    <div className="flex-col mt-4  px-6 md:px-16 lg:px-24 ">
+    <div className="flex-col mt-6  px-3 sm:px-10 md:px-15 lg:px-18 ">
       <h1 className="text-3xl mb-6 mt-4 px-20 uppercase">{params.category}</h1>
       <div className="flex items-center justify-center gap-5">
         {productitems.filter((product)=>product.instock && product.category.toLowerCase()==params.category).map((product)=>(<Product product={product}></Product>))}

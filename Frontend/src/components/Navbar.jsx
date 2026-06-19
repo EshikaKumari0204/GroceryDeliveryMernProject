@@ -29,7 +29,7 @@ navigate("/products")
             <div className="hidden sm:flex items-center gap-8">
                 <NavLink to="/">Home</NavLink>
                 <NavLink to="/products">All products</NavLink>
-                <NavLink to="/contact">Contact</NavLink>
+                <NavLink to="/">Contact</NavLink>
 
                 <div className="hidden lg:flex items-center text-sm gap-2 border border-gray-300 px-3 rounded-full">
                     <input onChange={(e)=>{setsearchquery(e.target.value)}} className="py-1.5 w-full bg-transparent outline-none placeholder-gray-500" type="text" placeholder="Search products" value={searchquery} />
@@ -60,7 +60,7 @@ navigate("/products")
                 <NavLink to="/" onClick={() => setOpen(false)}  className="block">Home</NavLink>
                 <NavLink to="/products" onClick={() => setOpen(false)} className="block">All Products</NavLink>
                 {user && <NavLink to="/orders" onClick={() => setOpen(false)} className="block">My Orders</NavLink>}
-                <NavLink to="/contact" onClick={() => setOpen(false)} className="block">Contact</NavLink>
+                <NavLink to="/" onClick={() => setOpen(false)} className="block">Contact</NavLink>
                 {user ? <button onClick={logout} className="cursor-pointer px-6 py-2 mt-2 bg-amber-600 hover:bg-amber-800 transition text-white rounded-full text-sm">
                     Logout
                 </button>: <button onClick={()=>{setOpen(false);setUserLogin(true)}} className="cursor-pointer px-6 py-2 mt-2 bg-amber-600 hover:bg-amber-800 transition text-white rounded-full text-sm">

@@ -4,7 +4,7 @@ import { Appcontext } from "../context/Appcontext";
 import { assets } from "../assets/assets";
 const Product = ({product}) => {
     const {addtocart,removetocart,navigate,cartitems,setcartitems}=useContext(Appcontext)
-    return (
+    return product && (
         <div className="border border-gray-500/20 rounded-md md:px-4 px-3 py-2 bg-white min-w-56 max-w-56 w-full " onClick={()=>navigate(`/products/${product.category}/${product._id}`)} >
             <div className="group cursor-pointer flex items-center justify-center px-2">
                 <img className="group-hover:scale-105 transition max-w-26 md:max-w-36" src={`http://localhost:4000${product.image}`} alt={product.name} />
@@ -15,16 +15,16 @@ const Product = ({product}) => {
                 <div className="flex items-center gap-0.5">
                     {Array(5).fill('').map((_, i) => (
                            i<4 ? (
-                               <img src={assets.star_icon}></img>
+                               <img src={assets.star_icon} key={i}></img>
                             ) : (
-                                <img src={assets.star_dull_icon} alt="" />
+                                <img src={assets.star_dull_icon} key={i} alt="" />
                             )
                         ))}
                     <p>(4)</p>
                 </div>
                 <div className="flex items-end justify-between mt-3">
                     <p className="md:text-xl text-base font-medium text-amber-500">
-                        ₹{product.offerprice} <span className="text-gray-500/60 md:text-sm text-xs line-through">₹{product.price}</span>
+                        ₹{product.offerPrice} <span className="text-gray-500/60 md:text-sm text-xs line-through">₹{product.price}</span>
                     </p>
                     <div className="text-amber-600" onClick={(e)=>{e.stopPropagation()}}>
                         {!cartitems[product._id]? (

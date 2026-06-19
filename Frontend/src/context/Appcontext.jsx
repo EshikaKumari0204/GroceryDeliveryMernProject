@@ -9,7 +9,7 @@ export const AppContextProvider=({children})=>{
   //STATES 
 const navigate=useNavigate();
 const [user,setuser]=useState(null);
-const [isSeller,setisSeller]=useState();  // default me false
+const [isSeller,setisSeller]=useState(false);  // default me false
 const [showUserLogin,setUserLogin]=useState(false); //default false 
 const [productitems,setproductitems]=useState([]);
 const [cartitems,setcartitems]=useState({});
@@ -24,7 +24,6 @@ const fetchproductitems=async()=>{
    console.log(error.message)
   }
 }
-
   const fetchseller= async()=>{ 
     try{
 const {data}=await axios.get("/api/seller/is-auth")
@@ -54,14 +53,9 @@ const {data}=await axios.get("/api/user/is-auth")
    fetchseller()
   fetchproductitems();
   },[])
-
-
- 
     const cartupdate=async()=>{
     try {
-      const curruser=user
-       const {data}=await axios.post("/api/cart/updatecart",{userid:curruser._id,cartitems});
-      
+       const {data}=await axios.post("/api/cart/updatecart",{cartitems});
     if(data.success) {console.log("updated cart")}
       else toast.error(data.message)
     } catch (error) {
@@ -72,8 +66,7 @@ const {data}=await axios.get("/api/user/is-auth")
   useEffect(()=>{
     if(user)
     cartupdate()
-
-  },[cartitems])
+  },[cartitems,user])
 //cartitems have product id and their quantity 
 const addtocart=(id)=>{
   const products=structuredClone(cartitems);
@@ -82,18 +75,16 @@ const addtocart=(id)=>{
   }
   else{
       products[id]=1;
-     
-      
   }
   setcartitems(products)
-  toast.success("added to cart")
+  toast.success("Added To Cart")
 }
 //change the product item quantity
 const updatecart=(quantity,id)=>{
   const products=structuredClone(cartitems);
   products[id]=quantity
   setcartitems(products)
-  toast.success("cart updated")
+  toast.success("Cart Updated")
 }
 const removetocart=(id)=>{
   const products=structuredClone(cartitems);
@@ -104,7 +95,7 @@ const removetocart=(id)=>{
   }
   }
    setcartitems(products)
-  toast.success("Removed from cart")
+  toast.success("Removed From Cart")
 }
 
 const totalcartitems=()=>{

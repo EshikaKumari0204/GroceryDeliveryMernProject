@@ -1,21 +1,27 @@
-import {assets,features} from "../assets/assets"
-const BottomBanner=()=>{
-  return (<div className=" mt-24 relative ">
-      <img src={assets.bottom_banner_image} alt="bottombanner"  className="hidden md:block w-full h-100" />
-    <img src={assets.bottom_banner_image_sm} alt="bottombanner"  className="block md:hidden h-200 w-full"/>
-    <div className="flex flex-col absolute inset-0 pr-5 items-center md:items-end md:justify-center pt-16 md:pt-0 md:pr-24 ">
-     <div> <h1 className="text-2xl md:text-3xl font-semibold text-primary mb-6">Why we are the Best</h1>
-         {features.map((feature,index)=>(<div  key={index}className="flex gap-2  mb-1 items-center justify-center  w-full ">
-         <img src={feature.icon} alt="icon" className="md:w-11 w-9" />
+import { features } from "../assets/assets";
 
-
-  <h5 className="font-bold"> {feature.title}</h5>
-  <p className="text-gray-400 text-sm">{feature.description}</p>
-
-      </div>))}
-      </div></div>
+const BottomBanner = () => {
+  return (
+    <div className="mt-24 px-6 md:px-16 lg:px-24">
+      <h1 className="text-2xl md:text-3xl font-semibold text-primary text-center mb-10">
+        Our Main Features
+      </h1>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        {features.map((feature, index) => (
+          <div
+            key={index}
+            className="flex flex-col items-center text-center bg-green-50 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow"
+          >
+            <div className="bg-green-100 rounded-full p-4 mb-4">
+              <img src={feature.icon} alt={feature.title} className="w-8 h-8" />
+            </div>
+            <h5 className="font-bold text-base mb-1">{feature.title}</h5>
+            <p className="text-gray-500 text-sm">{feature.description}</p>
+          </div>
+        ))}
+      </div>
     </div>
-)
-  
-}
+  );
+};
+
 export default BottomBanner;

@@ -23,10 +23,11 @@ const App=()=>{
   const {showUserLogin,isSeller}=useContext(Appcontext)
   const isSellerPath=useLocation().pathname.includes("seller")
   return (<>
-    {!isSellerPath?<Navbar/>:""} 
+    {!isSellerPath?<Navbar/>:null} 
     {showUserLogin?<Login></Login>:null}
     <Toaster></Toaster>
-    <div >
+    
+      <div >
     <Routes>
       <Route path="/" element={<Home isSellerPath={isSellerPath}/>}></Route>
       <Route path="/products" element={<Products isSellerPath={isSellerPath}/>}></Route>
@@ -36,12 +37,11 @@ const App=()=>{
        <Route path="/address" element={<AddAddress isSellerPath={isSellerPath} />}></Route>
         <Route path="/orders" element={<Order isSellerPath={isSellerPath} />}></Route>
          <Route path="/seller" element={isSeller?<Layout/>:<LoginSeller/>}>
-         <Route   path="addprod" element={isSeller?<AddProduct/>:null}></Route>
+         <Route   path="/seller" element={isSeller?<AddProduct/>:null}></Route>
            <Route path="chat" element={isSeller?<AllOrders/>:null}></Route>
              <Route path="overview" element={isSeller?<SellerallProd/>:null}></Route>
          </Route>
-    </Routes> </div>
-
+    </Routes></div>
   {!isSellerPath?<Footer/>:""} 
     </>
   )

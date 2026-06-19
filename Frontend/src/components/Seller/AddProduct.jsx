@@ -36,7 +36,7 @@ else{
     }
    }
     return (
-        <div className="py-10 flex flex-col justify-between bg-white">
+        <div className=" flex flex-col justify-between bg-white">
             <form className="md:p-10 p-4 space-y-5 max-w-lg" encType="multipart/form-data" onSubmit={(e)=>submitHandler(e)}>
                 <div>
                     <p className="text-base font-medium">Product Image</p>
