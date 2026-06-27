@@ -7,31 +7,39 @@ const SellerallProd = () => {
   useEffect(()=>{
     setproducts(productitems)
   },[productitems])
-  const changestock=async(id,instock)=>{
+  const changestock=async(id,inStock)=>{
     try {
-         const {data}=await axios.post("/api/product/stock",{id,instock})
+            console.log(id,inStock)
+         const {data}=await axios.post("/api/product/stock",{id,inStock})
+     
          console.log(data)
     if(data.success){
-        toast.success("stock updates")
+        toast.success("Stock Updated")
     }
         
     } catch (error) {
-        toast.error("error while stock updation");
+        toast.error(error.message);
     }
    
 
   }
 
     return (
-        <div className="flex-1 py-10 flex flex-col justify-between">
+        <div className="flex-1 py-1 flex flex-col justify-between">
             <div className="w-full md:p-10 p-4">
-                <h2 className="pb-4 text-lg font-medium">All Products</h2>
+                <div className="mb-6">
+       
+        <h1 className="text-2xl sm:text-3xl font-bold text-gray-800 uppercase">
+          ALL PRODUCTS
+        </h1>
+        <div className="w-12 h-1 bg-amber-500 rounded-full mt-2" />
+      </div>
                 <div className="flex flex-col items-center max-w-4xl w-full overflow-hidden rounded-md bg-white border border-gray-500/20">
                     <table className="md:table-auto table-fixed w-full overflow-hidden">
                         <thead className="text-gray-900 text-sm text-left">
                             <tr>
                                 <th className="px-4 py-3 font-semibold truncate">Product</th>
-                                <th className="px-4 py-3 font-semibold truncate">Category</th>
+                                <th className="px-4 py-3 font-semibold truncate  ">Category</th>
                                 <th className="px-4 py-3 font-semibold truncate hidden md:block">Selling Price</th>
                                 <th className="px-4 py-3 font-semibold truncate">In Stock</th>
                             </tr>
@@ -41,18 +49,18 @@ const SellerallProd = () => {
                                 <tr key={index} className="border-t border-gray-500/20">
                                     <td className="md:px-4 pl-2 md:pl-4 py-3 flex items-center space-x-3 truncate">
                                         <div className="border border-gray-300 rounded overflow-hidden">
-                                            <img src={`http://localhost:4000${product.image[0]}`} alt="Product" className="w-16" />
+                                            <img src={product.image[0]} alt="Product" className="w-16" />
                                         </div>
                                         <span className="truncate max-sm:hidden w-full">{product.name}</span>
                                     </td>
-                                    <td className="px-4 py-3">{product.category}</td>
-                                    <td className="px-4 py-3 max-sm:hidden">${product.offerprice}</td>
+                                    <td className="px-4 py-3 ">{product.category}</td>
+                                    <td className="px-4 py-3 max-sm:hidden">${product.offerPrice}</td>
                                     <td className="px-4 py-3">
-                                        <label className="relative inline-flex items-center cursor-pointer text-gray-900 gap-3">
-                                            <input type="checkbox" className="sr-only peer" defaultChecked={product.instock} onClick={()=>changestock(product._id,!product.instock)}/>
-                                            <div className="w-12 h-7 bg-slate-300 rounded-full peer peer-checked:bg-blue-600 transition-colors duration-200"></div>
-                                            <span className="dot absolute left-1 top-1 w-5 h-5 bg-white rounded-full transition-transform duration-200 ease-in-out peer-checked:translate-x-5"></span>
-                                        </label>
+                                      <label className="relative inline-flex items-center cursor-pointer text-gray-900 gap-3">
+  <input type="checkbox" className="sr-only peer" defaultChecked={product.inStock} onClick={() => changestock(product._id, !product.inStock)} />
+  <div className="w-8 h-5 sm:w-12 sm:h-7 bg-slate-300 rounded-full peer peer-checked:bg-blue-600 transition-colors duration-200"></div>
+  <span className="dot absolute left-1 top-1 w-3 h-3 sm:w-5 sm:h-5 bg-white rounded-full transition-transform duration-200 ease-in-out peer-checked:translate-x-3 sm:peer-checked:translate-x-5"></span>
+</label>
                                     </td>
                                 </tr>
                             ))}

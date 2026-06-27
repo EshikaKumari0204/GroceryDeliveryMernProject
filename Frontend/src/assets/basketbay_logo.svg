@@ -1,0 +1,29 @@
+<svg width="160" height="40" viewBox="0 0 160 40" role="img" xmlns="http://www.w3.org/2000/svg">
+  <title>BasketBay navbar logo</title>
+  <desc>Compact BasketBay logo for navbar use</desc>
+
+  <!-- Basket icon -->
+  <g transform="translate(18, 20)">
+    <!-- Basket body -->
+    <path d="M-10,0 Q-10,10 0,11 Q10,10 10,0 Z" fill="#F59E0B"/>
+    <!-- Weave lines -->
+    <clipPath id="nc">
+      <path d="M-10,0 Q-10,10 0,11 Q10,10 10,0 Z"/>
+    </clipPath>
+    <g clip-path="url(#nc)">
+      <line x1="-11" y1="4" x2="11" y2="4" stroke="#B45309" stroke-width="0.8" opacity="0.7"/>
+      <line x1="-11" y1="8" x2="11" y2="8" stroke="#B45309" stroke-width="0.8" opacity="0.7"/>
+      <line x1="-5" y1="0" x2="-5" y2="12" stroke="#B45309" stroke-width="0.6" opacity="0.5"/>
+      <line x1="0"  y1="0" x2="0"  y2="12" stroke="#B45309" stroke-width="0.6" opacity="0.5"/>
+      <line x1="5"  y1="0" x2="5"  y2="12" stroke="#B45309" stroke-width="0.6" opacity="0.5"/>
+    </g>
+    <!-- Rim -->
+    <rect x="-11" y="-2" width="22" height="3" rx="1.5" fill="#111"/>
+    <!-- Handle -->
+    <path d="M-6,-2 Q-6,-11 0,-11 Q6,-11 6,-2" fill="none" stroke="#111" stroke-width="2" stroke-linecap="round"/>
+  </g>
+
+  <!-- Wordmark -->
+  <text x="33" y="26" font-family="Georgia, serif" font-size="18" font-weight="700" fill="#111111" letter-spacing="-0.5">Basket</text>
+  <text x="101" y="26" font-family="Georgia, serif" font-size="18" font-weight="700" fill="#F59E0B" letter-spacing="-0.5">Bay</text>
+</svg>

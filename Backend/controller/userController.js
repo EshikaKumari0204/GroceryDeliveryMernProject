@@ -1,4 +1,4 @@
-import Usermodel from "../models/Usermodel.js"
+import UserModel from "../models/Usermodel.js"
 import jwt from "jsonwebtoken"
 import bcrypt from "bcryptjs"
   export const register=async(req,res)=>{
@@ -9,7 +9,7 @@ import bcrypt from "bcryptjs"
     return res.json({success:false,message:"Empty fields"})
   }
   else{
-    const user=await Usermodel.findOne({email})
+    const user=await UserModel.findOne({email})
  
     if(user){
       return res.json({success:false,message:"User already exists"})
@@ -17,14 +17,14 @@ import bcrypt from "bcryptjs"
    
      const salt=await bcrypt.genSalt(10);
      const hashedpass=await bcrypt.hash(password,salt);
-     const newuser=await Usermodel.create({name,email,password:hashedpass})
+     const newuser=await UserModel.create({name,email,password:hashedpass})
      const token=jwt.sign({id:newuser._id},process.env.JWT_SECRET,{expiresIn:"7d"}
      )
      res.cookie('token',token,{
       httpOnly:true,
       secure: process.env.ENVIRONMENT === "production",
       sameSite:process.env.ENVIRONMENT=="production"?'none':'strict',
-      maxAge:24*7*60*60*1000
+      maxAge:7*24*60*60*1000
      })
       return res.json({success:true,user:{email:newuser.email,name:newuser.name}})
     }
@@ -32,7 +32,7 @@ import bcrypt from "bcryptjs"
   
   catch(err){
  console.log(err.message)
- return res.status(500).json({success:false,message:"Server error"})
+ return res.status(500).json({success:false,message:err.message})
   }
 }
  export const login=async(req,res)=>{
@@ -42,9 +42,9 @@ import bcrypt from "bcryptjs"
    if(!email ||!password){
     return res.json({success:false,message:"Empty fields"})
   }
-  const user=await Usermodel.findOne({email})
-  if(!user) return res.json({success:false,message:"invalid user or password"})
-    else{
+  const user=await UserModel.findOne({email})
+  if(!user) return res.json({success:false,message:"invalid credentials"})
+    
     const passcorrect=await bcrypt.compare(password,user.password)
     if(passcorrect){
        const token=jwt.sign({id:user._id},process.env.JWT_SECRET,{expiresIn:"7d"} )
@@ -54,18 +54,22 @@ import bcrypt from "bcryptjs"
       sameSite:process.env.ENVIRONMENT=="production"?'none':'strict',
       maxAge:24*7*60*60*1000})
       return res.json({success:true,user:{email:user.email,name:user.name}}) }
-      return res.json({success:false,message:"invalid user or password"})
-    }
+      return res.json({success:false,message:"invalid credentials"})
+    
   }
   catch(err){
-   
+   console.log(err.message)
    return res.json({success:false,message:err.message})}
 }
  export const isauth=async(req,res)=>{
-  const id=req.id;
-  const user=await Usermodel.findById(id).select('-password'); 
- 
-res.json({success:true,user})
+  try {
+    const userId=req.userId;
+    const user=await UserModel.findById(userId).select("-password")
+     return res.json({success:true,user})
+  } catch (error) {
+      console.log("error",error.message)
+    return res.json({success:false,message:error.message})
+  }
 }
 
  export const logout=async(req,res)=>{
@@ -78,14 +82,16 @@ res.json({success:true,user})
      return res.json({success:true,message:"logout successful"})
   }
   catch(err){
-
+  console.log("error",err.message)
     return res.json({success:false,message:"Server error"})
 
   }
 }
  export const updatecart=async(req,res)=>{
  try{ const {id,cartitems}=req.body;
-  const user=findByIdAndUpdate({id,cartitems})}
+  const user=await UserModel.findByIdAndUpdate(id,{cartitems})
+    return res.json({success:true,message:"Cart updated"})
+}
    catch(err){
     console.log(err.message);
     return res.json({success:false,message:"Server error"})

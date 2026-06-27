@@ -7,18 +7,17 @@ const Login = () => {
     const [state, setState] = useState("login")
     const [name,setname]=useState(null);
     const [email,setemail]=useState(null);
-    const [pass,setpass]=useState(null);
+    const [password,setpass]=useState(null);
     const handleSubmit = async(e) => {
         try{
- e.preventDefault();
-        const {data}=await axios.post(`/api/user/${state}`,{name:name,email:email,password:pass})
-       
+        e.preventDefault();
+        const {data}=await axios.post(`/api/user/${state}`,{name,email,password})
         console.log("data",data)
         if(data.success){
             setuser(data.user);
             navigate("/");
             setUserLogin(false)
-             toast.success("logged in successfully")
+            toast.success("Logged In successfully")
         }
         else{
              toast.error(data.message)
@@ -50,7 +49,7 @@ const Login = () => {
             </div>
             <div className=" flex items-center mt-4 w-full bg-white border border-gray-700 h-12 rounded-full overflow-hidden pl-6 gap-2 ">
                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" className="text-gray-400" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"> <rect width="18" height="11" x="3" y="11" rx="2" ry="2" /> <path d="M7 11V7a5 5 0 0 1 10 0v4" /> </svg>
-                <input type="password" name="password" placeholder="Password" className="w-full bg-transparent text-black placeholder-gray-400 border-none outline-none" value={pass} onChange={(e)=>setpass(e.target.value)} required />
+                <input type="password" name="password" placeholder="Password" className="w-full bg-transparent text-black placeholder-gray-400 border-none outline-none" value={password} onChange={(e)=>setpass(e.target.value)} required />
             </div>
             <button type="submit" className="mt-2 w-full h-11 rounded-full text-white bg-amber-600 hover:bg-amber-800 transition " >
                 {state === "login" ? "Login" : "Sign up"}

@@ -5,5 +5,5 @@ const userschema=new mongoose.Schema({
   password:{type:String,required:true},
   cartitems:{type:Object,default:{}}
 },{minimize:false})
- const UserModel=  mongoose.models.users||mongoose.model("user",userschema)
+ const UserModel=  mongoose.models.user||mongoose.model("user",userschema)
 export default  UserModel

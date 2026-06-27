@@ -3,7 +3,7 @@ import { features } from "../assets/assets";
 const BottomBanner = () => {
   return (
     <div className="mt-24 px-6 md:px-16 lg:px-24">
-      <h1 className="text-2xl md:text-3xl font-semibold text-primary text-center mb-10">
+      <h1 className="text-2xl md:text-3xl text-center md:text-left font-semibold text-primary  mb-10">
         Our Main Features
       </h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -15,7 +15,7 @@ const BottomBanner = () => {
             <div className="bg-green-100 rounded-full p-4 mb-4">
               <img src={feature.icon} alt={feature.title} className="w-8 h-8" />
             </div>
-            <h5 className="font-bold text-base mb-1">{feature.title}</h5>
+            <h5 className="font-semibold text-base text-gray-900  mb-1">{feature.title}</h5>
             <p className="text-gray-500 text-sm">{feature.description}</p>
           </div>
         ))}

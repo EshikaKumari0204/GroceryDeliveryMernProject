@@ -6,8 +6,12 @@ import toast from "react-hot-toast"
 const Layout = () => {
   const {navigate,setisSeller,axios}=useContext(Appcontext)
   const logout=async()=>{
-    try{ const {data}=await  axios("/api/seller/logout")
-    if(data.success) setisSeller(false)
+     try{ const {data}=await  axios("/api/seller/logout")
+    if(data.success) {
+setisSeller(false)
+toast.success(data.message)
+navigate("/")
+    }
     else toast.error(data.message)}
 catch(err){
     toast.error(err.message)
@@ -17,10 +21,11 @@ catch(err){
    const overviewicon=(<img  src={assets.product_list_icon}></img>)
     const chaticon=(<img  src={assets.order_icon}></img>)
     const sidebarLinks = [
-        { name: "Dashboard", path: "/seller", icon: dashboardicon },
-        { name: "Overview", path: "/seller/overview", icon: overviewicon },
-        { name: "Chat", path: "/seller/chat", icon: chaticon },
+        { name: "Add Product", path: "/seller", icon: dashboardicon },
+        { name: "Product List", path: "/seller/overview", icon: overviewicon },
+        { name: "Orders", path: "/seller/chat", icon: chaticon },
     ];
+  
   return (
         <div class="flex flex-col ">
             <div className="flex items-center justify-between px-4 md:px-8 border-b border-gray-300 py-3 bg-white transition-all duration-300">
@@ -28,11 +33,11 @@ catch(err){
                     <img className="h-9" src={assets.logo} alt="dummyLogoColored"  />
                 </NavLink>
                 <div className="flex items-center gap-5 text-gray-500">
-                    <p className="hidden sm:block">Hi! Admin</p>
-                    <button className='border rounded-full text-sm px-4 py-1' onClick={logout}>Logout</button>
+                    <p className="hidden sm:block">Hi Admin!</p>
+                    <button className='border rounded-full text-sm px-4 py-2 bg-amber-500 text-white' onClick={logout}>Logout</button>
                 </div>
             </div>
-          <div className="flex"> <div className="md:w-64 w-16 border-r h-80vh text-base border-gray-300 pt-4 flex flex-col transition-all duration-300  ">
+          <div className="flex"> <div className="md:w-64 w-16 border-r h-80vh text-base border-gray-300 pt-4 flex flex-col transition-all duration-300 min-h-screen ">
                 {sidebarLinks.map((item,) => (
                     <NavLink to={item.path} key={item.name} end={item.path==='/seller'}
                        className={({ isActive }) =>

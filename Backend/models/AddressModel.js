@@ -1,8 +1,8 @@
 import  mongoose from "mongoose"
 const AddressSchema=new mongoose.Schema({
-  userid:{type:String,required:true},
-  firstname:{type:String,required:true},
-  lastname:{type:String,required:true},
+  userId:{type:String,required:true},
+  firstName:{type:String,required:true},
+  lastName:{type:String,required:true},
   email:{type:String,required:true},
    street:{type:String,required:true},
     city:{type:String,required:true},

@@ -2,6 +2,7 @@ import {createContext,useState,useEffect} from 'react'
 import {useNavigate} from 'react-router-dom'
 import {toast} from "react-hot-toast"
 import axios from "axios"
+import { dummyProducts } from '../assets/assets'
 axios.defaults.baseURL=import.meta.env.VITE_BACKEND_URL
 axios.defaults.withCredentials=true
 export const Appcontext=createContext();
@@ -19,9 +20,11 @@ const [searchquery,setsearchquery]=useState("");
 const fetchproductitems=async()=>{
   try {
   const {data}=await axios("/api/product/allprod")
+  if(data.success)
   setproductitems(data.products);
   } catch (error) {
    console.log(error.message)
+   toast.error(error.message)
   }
 }
   const fetchseller= async()=>{ 
@@ -36,18 +39,19 @@ const {data}=await axios.get("/api/seller/is-auth")
   }}
 
    const fetchuser= async()=>{ 
-    
     try{  
 const {data}=await axios.get("/api/user/is-auth")
    if(data.success) {setuser(data.user) ; setcartitems(data.user.cartitems || {})}
     else{ setuser(null)}
     }
   catch(err){
+    
      setuser(null)
   console.log(err.message)
   }
 }
 
+  
   useEffect(()=>{
    fetchuser()
    fetchseller()
@@ -80,7 +84,7 @@ const addtocart=(id)=>{
   toast.success("Added To Cart")
 }
 //change the product item quantity
-const updatecart=(quantity,id)=>{
+const updatecart=(id,quantity)=>{
   const products=structuredClone(cartitems);
   products[id]=quantity
   setcartitems(products)
@@ -101,20 +105,18 @@ const removetocart=(id)=>{
 const totalcartitems=()=>{
 let totalcount=0
   for (const item in cartitems){
-   if(cartitems[item]>0)totalcount++
+   if(cartitems[item]>0)totalcount++;
   }
   return totalcount
 }
 
 const totalpriceofcart=()=>{
-
  let totalprice=0
-
  for(const item in cartitems){
   const prod=productitems.find((prod)=>prod._id===item)
-  if(cartitems[item]>0) totalprice+=(prod.offerprice*cartitems[item])
+  if(cartitems[item]>0) totalprice+=(prod?.offerPrice*cartitems[item])
  }
-   return totalprice
+   return Math.floor(totalprice*100)/100
 }
 const value={user,setuser,isSeller,setisSeller,navigate,showUserLogin,setUserLogin,fetchproductitems,addtocart,removetocart,searchquery,setsearchquery,productitems,totalcartitems,totalpriceofcart,cartitems,setcartitems,axios,updatecart}
  return <Appcontext.Provider value={value}>{children}</Appcontext.Provider>

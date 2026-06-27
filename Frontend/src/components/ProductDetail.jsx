@@ -6,21 +6,24 @@ import Product from './Product';
 const ProductDetail = () => {
   const params=useParams();
   const id=params._id;
+  
   const categ=params.category;
+  
   const [relatedproducts,setrelatedproducts]=useState([])
   const {addtocart,navigate,productitems}=useContext(Appcontext)
+  let product=productitems.find((prod)=>prod._id==id)
 
-  let product=productitems.filter((prod)=>prod._id===id)
-     product=product[0]
-      console.log(`http://localhost:4000${product.image[0]}`)
-    const [thumbnail, setThumbnail] = useState(`http://localhost:4000${product.image[0]}`);
+     if(product) console.log(product.image[0])
+
+   
+    const [thumbnail, setThumbnail] = useState(product?.image[0]);
       useEffect(()=>{
-const relatedstuff=productitems.filter((prod)=>prod.category===categ)
-  setrelatedproducts(relatedstuff)
+const relatedstuff=productitems.filter((prod)=>prod.category.toLowerCase()===categ)
+  setrelatedproducts(relatedstuff.slice(0,5))
   },[id])
    useEffect(()=>{
     if(product && product.image && product.image.length>0)
-  setThumbnail(`http://localhost:4000${product.image[0]}`)
+  setThumbnail(product.image[0])
   },[product])
   return (
     product && (
@@ -29,7 +32,7 @@ const relatedstuff=productitems.filter((prod)=>prod.category===categ)
             <p>
                 <Link to={"/"}>Home</Link> /
                 <Link to={"/products"}> Products</Link> /
-                <Link to={`/products/${product.category}`}></Link> 
+                <Link to={`/products/${product.category.toLowerCase()}`}></Link> 
                 <span className="text-amber-600"> {product.name}</span>
             </p>
             <div className="flex flex-col md:flex-row gap-16 mt-4">
@@ -37,7 +40,7 @@ const relatedstuff=productitems.filter((prod)=>prod.category===categ)
                     <div className="flex flex-col gap-3">
                         {product.image.map((image, index) => (
                             <div key={index} onClick={() => setThumbnail(image)} className="border max-w-24 border-gray-500/30 rounded overflow-hidden cursor-pointer" >
-                                <img src={`http://localhost:4000${image}`} alt={`Thumbnail ${index + 1}`} />
+                                <img src={image} alt={`Thumbnail ${index + 1}`} />
                             </div>
                         ))}
                     </div>

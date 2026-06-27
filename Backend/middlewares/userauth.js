@@ -1,5 +1,5 @@
 import  jwt  from "jsonwebtoken"
-const isLoggedIn=async(req,res,next)=>{
+ const isLoggedIn=async(req,res,next)=>{
   try{
  const token=req.cookies.token;
  if(!token){
@@ -7,7 +7,9 @@ const isLoggedIn=async(req,res,next)=>{
  }
  const decode= jwt.verify(token,process.env.JWT_SECRET)
  const id=decode.id;
- req.id=id;
+if(id){
+ req.userId=id;}
+ else return res.json({success:false,message:"No token found"})
 next();
   }
   catch(err){

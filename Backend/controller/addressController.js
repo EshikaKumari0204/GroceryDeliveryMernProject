@@ -1,27 +1,29 @@
 import AddressModel from "../models/AddressModel.js"
 export const addaddress=async(req,res)=>{
   try{
- const {id,address}=req.body
- console.log(req.body)
- const newaddress=await AddressModel.create({...address,userid:id})
- console.log(newaddress,"naya address")
+ const {address}=req.body
+ const userId=req.userId
+ 
+ const newaddress=await AddressModel.create({...address,userId})
+
  return res.json({success:true,message:"address added successfully"})
   }
   catch(err){
+    console.log(err.message)
      return res.json({success:false,message:err.message})
   
   }
- 
 }
 export const getaddress=async(req,res)=>{
   try {
-   const {userid} =req.user;
+   const userId =req.userId;
    
-   console.log(req.body,"ye bheja ")
-   const addresses=await AddressModel.find({userid})
-   console.log(addresses,"ye mila")
+   const addresses=await AddressModel.find({userId})
+  
+   
    return res.json({success:true,addresses})
   } catch (error) {
-     return res.json({success:false,message:error.message})
+      console.log(err.message)
+     return res.json({success:false,message:err.message})
   }
 }

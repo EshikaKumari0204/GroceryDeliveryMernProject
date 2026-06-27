@@ -8,7 +8,7 @@ const Navbar=()=>{
  const [open, setOpen] = useState(false);
  const {user,setuser,navigate,setUserLogin,searchquery,setsearchquery,totalcartitems,axios}=useContext(Appcontext);
  const logout=async()=>{
-    const {data}=await axios("/api/user/logout")
+    const {data}=await axios.get("/api/user/logout")
     if(data.success){
     setuser(null);
     navigate("/");
@@ -22,7 +22,7 @@ const Navbar=()=>{
 if(searchquery.length>0)
 navigate("/products")
  },[searchquery])
- return  (<nav className="flex items-center justify-between gap-8 px-6 md:px-16 lg:px-24 xl:px-32 py-4 border-b border-gray-300 bg-white relative transition-all">
+ return  (<nav className="flex items-center justify-between gap-8 px-6 md:px-16 lg:px-35 py-4 border-b border-gray-300 bg-white relative transition-all">
             <NavLink to="/" onClick={()=>setOpen(false)}>
                <img src={assets.logo} alt="company logo" />
             </NavLink>
@@ -49,7 +49,7 @@ navigate("/products")
                     </ul>
                     </div>}
             </div>
-            <div className="flex gap-8"><div className="relative cursor-pointer sm:hidden" onClick={()=>navigate("/cart")}>
+            <div className="flex gap-8 sm:hidden"><div className="relative cursor-pointer " onClick={()=>navigate("/cart")}>
                   <TiShoppingCart size={24} className="text-amber-600"/>
                     <button className="absolute -top-2 -right-3 text-xs text-amber-600 border-2 rounded-full   w-4.5 h-4.5 rounded-full">{totalcartitems()}</button>
                 </div> <button onClick={() => open ? setOpen(false) : setOpen(true)} aria-label="Menu" className="sm:hidden">
